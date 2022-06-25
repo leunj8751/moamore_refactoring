@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import moa.moamore.domain.Member;
 import moa.moamore.repository.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
 

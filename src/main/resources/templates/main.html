@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>모아 & More</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/moamore/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/moamore/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<style>
+
+
+
+body{
+
+	background-color:#0071a1;
+	}
+
+
+.tu_bg{
+ background-color:#f8f9fc;
+ width:80%;
+ text-align:center;
+ position:absolute;
+ left:10%;
+
+}
+
+.sitetop{
+	text-align:center;
+	padding:3%;
+	background-color:#f8f9fc;
+	height:5%;
+	margin:5% 0 0 0;
+
+}
+
+.imgbox{
+	display:block;
+	padding:3%;
+
+}
+.tu_img{
+	width:40%;
+	height:45%;
+	padding:10px;
+	margin:0 auto;
+}
+
+
+img{
+  max-width:100%;
+  max-height: 100%;
+
+
+}
+
+.img_title{
+	margin:3%;
+}
+
+.sign_btn{
+	color: #fff;
+    background-color: #f6c23e;
+    border-color: #fff;
+}
+
+</style>
+
+
+<body>
+<!--<c:if test="${sessionScope.memId != null }" >-->
+<!--    <c:redirect url="/moamore/dashboard.moa"/>-->
+<!--</c:if>-->
+<div class="tu_bg">
+    <div class="sitetop">
+        <div class="welcome"><h1 class="text-gray-900 mb-1"> Welcome to Moa & More</h1></div>
+        <div class="wel_Title"><p class="mb-4"> 예산을 설정하고, 돈을 모아 목표를 달성하세요!</p></div>
+        <div class="tu_btn"><button class="sign_btn btn" onclick="location.href='/moamore/member/signupForm.moa' ">회원가입 하러 가기</button> &nbsp;
+            <button class="btn-primary btn" onclick="location.href='/moamore/member/loginForm.moa' ">로그인하기</button>
+        </div>
+    </div>
+    <div class="totalImgBox">
+        <div class="imgbox">
+            <div class="tu_img shadow h-100 py-2"><img src="/moamore/resources/img/setBudget.png" /></div>
+            <p class="img_title text-gray-900 ">1.가입 후 예산을 설정하세요. 기간을설정하고 기간동안 사용할 금액을 입력 후 <br>카테고리별  예산을 총금액에 맞춰 설정해주세요.<br><span style="color:red">*예산을 새로 설정하면 이전 예산은 끝이 납니다.</span></p>
+        </div>
+        <div class="imgbox">
+            <div class="tu_img shadow h-100 py-2"><img src="/moamore/resources/img/goalList.png" /> </div>
+            <p class="img_title text-gray-900">2.목표를 설정하세요. 티클모아 태산! 하루하루 조금씩 모아 목표를 이루는 재미를 느껴봐요.<br>
+                다른사람들과 함께 목표를 공유할 수도 있습니다.  </p>
+        </div>
+        <div class="imgbox">
+            <div class="tu_img shadow h-100 py-2"><img src="/moamore/resources/img/insert.png" /> </div>
+            <p class="img_title text-gray-900">3.수입 지출을 입력하세요. 예산외 지출, 예산외 수입, 예산내 지출로 잘 나눠서 입력해주세요.</p>
+        </div>
+        <div class="imgbox">
+            <div class="tu_img shadow h-100 py-2"><img src="/moamore/resources/img/transfer.png" /> </div>
+            <p class="img_title text-gray-900">4.남은 예산을 분배하세요. 현재 예산 재분배와 목표로 보내기 중 선택할 수 있습니다.  </p>
+        </div>
+        <div class="imgbox">
+            <div class="tu_img shadow h-100 py-2"><img src="/moamore/resources/img/budgetReport.png" /> </div>
+            <p class="img_title text-gray-900">5.보고서를 확인하세요. 이번달 예산정보를 한눈에 확인할 수 있습니다.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+
+</html>

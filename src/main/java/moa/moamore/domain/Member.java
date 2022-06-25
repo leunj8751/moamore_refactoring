@@ -33,8 +33,7 @@ public class Member extends BaseEntity{
         this.nickname = nickname;
     }
 
+    public Member() {
 
-
-
-
+    }
 }
