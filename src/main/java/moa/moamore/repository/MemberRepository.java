@@ -15,7 +15,7 @@ public class MemberRepository {
     private final EntityManager em;
 
     public Member findOne(String id){
-        System.out.println("repository :"+id);
+        System.out.println("iiiiid :"+id);
         return em.find(Member.class,id);
     }
 

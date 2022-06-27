@@ -4,9 +4,11 @@ import moa.moamore.domain.Category;
 import moa.moamore.domain.Member;
 import moa.moamore.domain.Money_type;
 import moa.moamore.repository.CategoryRepository;
+import moa.moamore.repository.MemberRepository;
 import moa.moamore.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +25,12 @@ public class MemberServiceTest {
     MemberService memberService;
 
     @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
     CategoryRepository categoryRepository;
+
+
 
     @Test
     public void add_member(){
@@ -31,15 +38,14 @@ public class MemberServiceTest {
         Member member = new Member("leunj8751","1234","까비");
         memberService.join(member);
 
+        Member findMember = memberRepository.findOne(member.getId());
+        assertEquals(member.getId(),findMember.getId());
+
+
         List<Category> categoryList = categoryRepository.findByMember(member);
         List<Category> expenseCategoryList = categoryRepository.findByType(Money_type.expense);
-        List<Category> IncomeCategoryList = categoryRepository.findByType(Money_type.income);
-
-        System.out.println(expenseCategoryList.size());
 
         assertEquals(6,expenseCategoryList.size());
-//        assertEquals(true, expenseCategoryList.contains("건강"));
-//        assertEquals(true, IncomeCategoryList.contains("월급"));
 
     }
 

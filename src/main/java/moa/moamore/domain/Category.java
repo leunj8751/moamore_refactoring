@@ -2,8 +2,11 @@ package moa.moamore.domain;
 
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -31,6 +34,7 @@ public class Category extends BaseEntity{
         this.category_type = category_type;
     }
 
+    public Category() {
 
-
+    }
 }

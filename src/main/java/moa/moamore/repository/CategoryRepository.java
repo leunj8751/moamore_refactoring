@@ -35,6 +35,9 @@ public class CategoryRepository {
                 .getResultList();
     }
 
+    public Category findOne(Long id){
+        return em.find(Category.class,id);
+    }
 
     public void delete(Category category){
 //        em.createQuery("update ")

@@ -22,22 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http.csrf().disable(); // 비활성화
-//        http.authorizeRequests()
-//                .antMatchers("/dget/**").authenticated()
-//                .anyRequest().permitAll()
-//                .and()
-//                .formLogin()
-//                .loginPage("/member/login")
-//                .usernameParameter("memberId")
-//                .loginProcessingUrl("/member/login")
-//                .defaultSuccessUrl("/");
-//
-//    }
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -50,8 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/member/login")
                 .usernameParameter("memberId")
                 .loginProcessingUrl("/member/login")
-                .defaultSuccessUrl("/");
-
+                .defaultSuccessUrl("/")
+                .and()
+                .logout()
+                .logoutUrl("/member/logout")
+                .logoutSuccessUrl("/member/login");
     }
 
 

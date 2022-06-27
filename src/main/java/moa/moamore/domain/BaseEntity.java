@@ -13,9 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
+@Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@Getter
 public abstract class BaseEntity {
 
     @CreatedDate
@@ -24,9 +24,7 @@ public abstract class BaseEntity {
     private LocalDateTime modified_date;
 
     @Column(columnDefinition = "char(1) default 'Y'")
-    private Character use_yn;
-
-
+    private Character use_yn = 'Y';
 
 
 }
