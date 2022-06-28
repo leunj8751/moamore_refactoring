@@ -6,16 +6,21 @@ import moa.moamore.domain.Category;
 import moa.moamore.domain.Member;
 import moa.moamore.domain.Money_type;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CategoryRepository {
+
+    //트랜잭션!!
 
     private final EntityManager em;
 
+    @Transactional
     public void save(Category category){ em.persist(category);}
 
     public List<Category> findByType(Money_type type){
@@ -38,9 +43,9 @@ public class CategoryRepository {
     public Category findOne(Long id){
         return em.find(Category.class,id);
     }
-
+    @Transactional
     public void delete(Category category){
-//        em.createQuery("update ")
+        em.merge(category);
     }
 
 }

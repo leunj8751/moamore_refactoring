@@ -19,12 +19,12 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity {
 
     @CreatedDate
-    private LocalDateTime created_date;
+    protected LocalDateTime created_date;
     @LastModifiedDate
-    private LocalDateTime modified_date;
+    protected LocalDateTime modified_date;
 
     @Column(columnDefinition = "char(1) default 'Y'")
-    private Character use_yn = 'Y';
+    protected Character use_yn = 'Y';
 
 
 }

@@ -35,4 +35,18 @@ public class CategoryService {
 
     }
 
+    public List<Category> findCategoriesByType(String memberId,Money_type money_type){
+
+        Member member = memberRepository.findOne(memberId);
+        return categoryRepository.findByMemberAndType(money_type,member);
+
+    }
+
+    public void deleteCategory(Long id) {
+
+        Category category = categoryRepository.findOne(id);
+        category.updateUseYn();
+        categoryRepository.delete(category);
+
+    }
 }

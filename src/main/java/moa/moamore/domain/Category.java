@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Table(name="category")
 public class Category extends BaseEntity{
 
@@ -28,6 +29,8 @@ public class Category extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Money_type category_type;
 
+
+
     public Category(Member member, String category_name, Money_type category_type) {
         this.member = member;
         this.category_name = category_name;
@@ -37,4 +40,10 @@ public class Category extends BaseEntity{
     public Category() {
 
     }
+
+    public void updateUseYn(){
+        this.use_yn = 'N';
+    }
+
+
 }

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+
+
+  @media (max-width: 800px){
+      my_td{
+        	width:50px !important;
+        	height:50px !important;
+
+
+        }
+       .my_tab{
+       	border-spacing: 10px !important;
+       }
+
+       .cat_text{
+       		text-align:center;
+       		font-size:1em !important;
+       	}
+
+
+    }
+
+    @media (max-width: 500px){
+       .my_td{
+        	width:50px !important;
+        	height:50px !important;
+
+
+        }
+       .my_tab{
+       	border-spacing: 10px !important;
+       }
+
+       .cat_text{
+       		text-align:center;
+       		font-size:1em !important;
+       	}
+
+    }
+
+    @media (max-width: 370px){
+        my_td{
+        	width:50px !important;
+        	height:50px !important;
+
+
+        }
+       .my_tab{
+       	border-spacing: 10px !important;
+       }
+
+       .cat_text{
+       		text-align:center;
+       		font-size:1em !important;
+       	}
+
+
+    }
+
+
+a{text-decoration: none;color: #737271;}
+    i{font-size: 20px;}
+    .cat_btn{
+    	position: relative;
+    	float:right;
+    	top: -20%;
+    	padding:8px;
+
+
+    }
+    .cat_btn .my_sub p a{
+        display: block;
+        padding: 3px 0px;
+
+    }
+
+    .cat_text{
+    	text-align:center;
+    	top:-20%;
+    	font-size: 1em;
+    }
+    .my_sub{
+        position: absolute;
+        top: 32px;
+        left: -5px;
+        background: #EDEBE8;
+        width: 80px;
+        text-align: center;
+        border-radius: 8px;    /*서브 메뉴에 대한 스타일 값 다 적용 후*/
+        display: none;      /*화면에 보이지 않게 하기 위해 display:none;을 사용.*/
+    }
+    .cat_btn .my_sub.on{display: block;}    /*클릭시 추가해줄 on 클래스 미리 만들어둠.*/
+.categorymodal {
+         position: fixed;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         background-color: rgba(0, 0, 0, 0.5);
+         opacity: 0;
+         visibility: hidden;
+         transform: scale(1.1);
+         transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+
+     }
+
+.categorymodal-content {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         background-color: white;
+         padding: 1rem 1.5rem;
+         width: 400px;
+         height: 300px;
+         border-radius: 0.5rem;
+         z-index:5;
+     }
+ .show-categorymodal {
+         opacity: 1;
+         visibility: visible;
+         transform: scale(1.0);
+         transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+
+     }
+.my_tab{
+	border-collapse:separate;
+	border-spacing:26px;
+
+}
+.my_td{
+	width:250px;
+	height:100px;
+	border-radius: 10px;
+
+}
+.modify{
+	cursor:pointer;
+}
+button{
+	/* display: inline-block; */
+    padding: .5em .75em;
+    color: #333;
+    font-size: inherit;
+    /* line-height: normal; */
+    /* vertical-align: middle; */
+    /* background-color: #fdfdfd; */
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    text-align: center;
+
+}
+.close-button{
+	float:right;
+	cursor:pointer;
+}
+.btn-gradient {
+	margin: 5px;
+}
+.buttonDiv{
+	float:right;
+	padding:5px;
+
+}
+</style>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="fragments/sidebar :: sidebar"/>
+
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="fragments/topbar :: topbar" />
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- 페이지 이름 -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">카테고리 설정</h1>
+                </div>
+
+
+                <!-- 첫번째 줄 -->
+                <div class="row">
+                    <div class="card mb-4">
+                        <form id="inputCateogry" name="input" th:action="@{/category/__${#authentication.name}__/new}" method="post" th:object="${category}">
+                            <table>
+                                <tr>
+                                    <td>카테고리 추가</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name="categoryOption" id="categoryOption" th:field="*{category_type}">
+                                            <option th:each="type : ${T(moa.moamore.domain.Money_type).values()}"
+                                                    th:value="${type}" th:text="${type}"></option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" name="category_name" id="category_name" th:field="*{category_name}" placeholder="카테고리명을 입력하세요" /> </td>
+                                    <td><input type="submit" value="추가" id="inputCategory"/></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="mb-0 text-gray-800">지출 카테고리</h4>
+                    <form class='allExpense'>
+                        <table class='my_tab' >
+                            <tr>
+                                <th:block th:each="category,index : ${expenseList}" >
+                                    <td class='my_td border-left-primary shadow' >
+                                        <div class='cat_btn'>
+                                            <i class='fas fa-ellipsis-v'></i>
+                                            <div class='my_sub'>
+                                                <p>
+                                                    <a th:href="'javascript:deleteCategory('+${category.id}+')'">삭제하기</a>
+                                                    <a class='modify'>수정하기</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class='cat_text font-weight-bold' th:utext="${category.category_name}"></div>
+                                        <input type='hidden' name='category_no' class='category_no' th:value="${category.id}">
+                                    </td>
+                                </th:block>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="card-body">
+                    <h4>수입 카테고리</h4>
+                    <form class='allIncome'>
+                        <table class='my_tab' >
+                            <tr>
+                                <th:block th:each="category,index : ${incomeList}" >
+                                    <td class='my_td border-left-primary shadow' >
+                                        <div class='cat_btn'>
+                                            <i class='fas fa-ellipsis-v'></i>
+                                            <div class='my_sub'>
+                                                <p>
+                                                    <a th:href="'javascript:deleteCategory('+ __${#authentication.name}__ +','+${category.id}+')'">삭제하기</a>
+                                                    <a class='modify'>수정하기</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class='cat_text font-weight-bold' th:utext="${category.category_name}"></div>
+                                        <input type='hidden' name='category_no' class='category_no' th:value="${category.id}">
+                                    </td>
+                                </th:block>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+                <div class='categorymodal'>
+                    <div class='categorymodal-content'>
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="title m-0 font-weight-bold text-primary">modify category</h6>
+                            <span class="close-button">&times;</span>
+                        </div>
+                        <div class="modifyContent card-body">
+                            <textarea rows="2" style="width:310px" name='newName' class='newName' placeholder='카테고리 이름을 입력해주세요'></textarea>
+                            <div class="buttonDiv">
+                                <button class='modifyCategory'>변경</button>
+                                <button class='cancel'>취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <footer th:replace="fragments/footer :: footer" />
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+</body>
+
+
+
+
+</html>
+<script type="text/javascript">
+
+function deleteCategory(memberId,categoryId) {
+     var form = document.createElement("form");
+     form.setAttribute("method", "post");
+    form.setAttribute("action", "/category/"+memberId +"/"+categoryId + "/delete");
+     document.body.appendChild(form);
+     form.submit();
+ }
+
+var inOrOut = '';
+$(document).ready(function(){
+
+	//페이지 시작할때 카테고리 목록 불러오기
+
+	setTimeout(function() {
+		 updateAndDelete();
+	 },1000);
+
+	//수정창 x누를때
+	$(".close-button").on('click',function(){
+			$(this).parent().parent().parent().toggleClass('show-categorymodal');
+
+	});
+	$(".cancel").on('click',function(event){
+		$(this).parent().parent().parent().parent().toggleClass('show-categorymodal');
+	});
+
+
+});
+
+//수정 삭제 창이 열려있을때 창밖을 클릭하면 remove 클래스
+
+$(document).mouseup(function(e){
+	var container = $('.my_sub');
+
+	if(container.has(e.target).length===0 && $('.cat_btn').has(e.target).length===0){
+		$('.my_sub').removeClass('on');
+	}
+});
+
+//수정하기,삭제하기 창 띄워주기
+function updateAndDelete(){
+		$('.cat_btn i').each(function(){
+			$(this).on('click', function(){
+				if($(this).next().closest('.my_sub').hasClass('on')){
+					//수정.삭제 창에 on클래스가 있으면 on클래스 없애주기
+					$(this).next().closest('.my_sub').removeClass('on');
+				}else{
+					//버튼 누를때 수정삭제 창에 클래스 'on' 넣어주기
+					$(this).next().closest('.my_sub').addClass('on');
+				}
+
+				var category_no = $(this).parent().next().next().val();
+				var inorout = $(this).parent().next().next().next().val();
+
+				//수정하기 탭 누르면 모달창 띄어주기
+				cateogryModify(category_no,inorout);
+
+
+			});
+		});
+
+}
+//수정하기 모달창 보여주기
+function cateogryModify(category_no,inorout){
+	$('.modify').each(function(){
+		$(this).on('click', function(){
+			$('.categorymodal').addClass("show-categorymodal");
+			modifyAction(category_no,inorout);
+		});
+	});
+}
+
+//카테고리 수정하기
+function modifyAction(category_no,inorout){
+	$('.modifyCategory').unbind("click").bind("click",function(){
+		var newName = $('.newName').val();
+		if(newName == ""){
+			alert("카테고리를 입력해주세요");
+		}else{
+		window.location.href="/moamore/category/updateCategory.moa?newName="+newName+"&category_no="+category_no+"&inorout="+inorout;
+		getExpenseCategory();
+		}
+
+	});
+}
+
+</script>

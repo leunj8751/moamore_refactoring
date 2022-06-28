@@ -212,48 +212,7 @@
 			})
 		});
 
-		$('#insertLine').on('click', function(){ //라인 추가
-			$('#detailBudget').append('<tr><td><select name="category_name" class="category_name" required><option class="none" disabled selected>==카테고리 선택==</option><option th:each="category : ${categoryList}" th:value="${category.category_name}" th:text="${category.category_name}"></option></select></td><td><input type="number" name="amount" min="0" required class="amount"/></td><td><input type="number" class="rate"/>%</td><td><input type="number" readonly class="dayAmount"/>원</td><td><input type="button" class="deleteBtn" value="삭제"/></td></tr>');
-			optControl();
 
-			//삭제버튼 기능
-			$('.deleteBtn').on('click', function(){
-				//라인 삭제하면 해당 카테고리 사용가능
-				var x = $(this).parent().parent().children('option:selected').val();
-				$('option').each(function(){
-					if($(this).val()==x){
-						$(this).prop('hidden', true);
-					}
-				});
-				//삭제
-				$(this).parent().parent().remove();
-
-				//합계 자동계산
-				reSum();
-				//모든 none은 선택불가
-				$('.none').prop('disabled',true);
-				$('.none').prop('hidden',false);
-			});
-
-			//비율 및 총합 자동계산
-			$('.amount').on('keyup', function(){
-				reRate($(this));
-				reSum();
-				calDay($(this));
-			});
-			//비율 및 총합 자동계산
-			$('.rate').on('keyup', function(){
-				reCalRate($(this));
-				reSum();
-				calDay($(this).parent().prev().children('.amount'));
-			});
-
-			//카테고리명이 change일 때 옵션 속성 변경
-			$('.category_name').on('change', function(){
-				optControl();
-			});
-
-		});	//라인추가 function 끝
 
 		//총예산, 카테고리별 금액, 주기가 변경될때마다 '하루예산'계산
 		function calDay(amount) {

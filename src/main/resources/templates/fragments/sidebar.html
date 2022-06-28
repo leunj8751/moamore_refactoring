@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" th:fragment="sidebar">
 
   <!-- Sidebar - Brand -->
@@ -9,6 +10,7 @@
       <img src="/moamore/resources/img/whitepigF.png" width="50" height="50" />
     </div>
     <div class="sidebar-brand-text mx-3">모아 & More</div>
+
   </a>
 
   <!-- Divider -->
@@ -107,7 +109,7 @@
     </li>
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-      <a class="nav-link" href="/category/setCategory">
+      <a class="nav-link" th:href="@{/category/__${#authentication.name}__/list}">
         <i class="fas fa-fw fa-cog"></i>
         <span>설정</span></a>
     </li>

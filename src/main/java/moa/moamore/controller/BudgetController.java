@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import moa.moamore.auth.PrincipalDetails;
 import moa.moamore.domain.Budget;
 import moa.moamore.domain.Category;
+import moa.moamore.domain.Member;
 import moa.moamore.domain.Money_type;
 import moa.moamore.dto.BudgetDTO;
 import moa.moamore.dto.CategoryDTO;
@@ -15,10 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -65,15 +63,6 @@ public class BudgetController {
 
         return "redirect:/";
     }
-
-    @GetMapping("/category/setCategory")
-    public String categoryList(){
-
-        return "category/setCategory";
-    }
-
-
-
 
 
 }
