@@ -10,11 +10,11 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name="member")
-public class Member extends BaseEntity{
+@Table(name = "member")
+public class Member extends BaseEntity {
 
     @Id
-    @Column(name="member_id")
+    @Column(name = "member_id")
     private String id;
 
     private String password;

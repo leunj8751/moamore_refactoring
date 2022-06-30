@@ -41,28 +41,34 @@
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
                         <!-- 폼 시작 -->
-                        <form action="/member/signup" class ="user" method="post" name="inputForm" th:object="${memberDTO}">
+                        <form action="/member/signup" class="user" method="post" name="inputForm"
+                              th:object="${memberDTO}">
                             <div class="form-group">
-                                <input type="text"  th:field="*{memberId}" name ="id" class="form-control form-control-user input" id="user_id" placeholder="아이디">
+                                <input type="text" th:field="*{memberId}" name="id"
+                                       class="form-control form-control-user input" id="user_id" placeholder="아이디">
                                 <div class="check_font" id="id_check"></div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="password" th:field="*{password}" name ="pw" class="form-control form-control-user input" id="pw" placeholder="비밀번호">
+                                    <input type="password" th:field="*{password}" name="pw"
+                                           class="form-control form-control-user input" id="pw" placeholder="비밀번호">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="password" name="pwCh" class="form-control form-control-user input" id="pwch" placeholder="비밀번호 확인">
+                                    <input type="password" name="pwCh" class="form-control form-control-user input"
+                                           id="pwch" placeholder="비밀번호 확인">
                                 </div>
                             </div>
                             <div id="pw_alert"></div>
                             <div class="form-group">
-                                <input type="text" th:field="*{nickname}" name="nickname" class="form-control form-control-user input" id="nickname" placeholder="닉네임">
+                                <input type="text" th:field="*{nickname}" name="nickname"
+                                       class="form-control form-control-user input" id="nickname" placeholder="닉네임">
                                 <div class="check_nickname" id="nick_check"></div>
                             </div>
                             <div class="form-group">
                             </div>
 
-                            <input type="submit" value="가입하기" id="reg_submit" class="btn btn-facebook btn-user btn-block"  />
+                            <input type="submit" value="가입하기" id="reg_submit"
+                                   class="btn btn-facebook btn-user btn-block"/>
 
                         </form> <!--  폼 끝! -->
                         <hr>
@@ -126,6 +132,7 @@ $(document).ready(function () {
 	});
 
 });
+
 
 </script>
 

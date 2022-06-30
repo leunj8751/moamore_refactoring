@@ -29,19 +29,19 @@ public class MemberController {
     private final MemberRepository memberRepository;
 
     @GetMapping("/member/signup")
-    public String signupForm(Model model){
+    public String signupForm(Model model) {
 
         if (isAuthenticated()) {
             return "redirect:/";
         }
 
-        model.addAttribute("memberDTO",new MemberDTO());
+        model.addAttribute("memberDTO", new MemberDTO());
 
         return "member/signupForm";
     }
 
     @PostMapping("/member/signup")
-    public String signup(@Valid MemberDTO memberDTO, BindingResult result){
+    public String signup(@Valid MemberDTO memberDTO, BindingResult result) {
 
         String rawPassword = memberDTO.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
@@ -54,13 +54,13 @@ public class MemberController {
     }
 
     @GetMapping("/member/login")
-    public String loginForm(Model model){
+    public String loginForm(Model model) {
 
         if (isAuthenticated()) {
             return "redirect:/";
         }
 
-        model.addAttribute("memberDTO",new MemberDTO());
+        model.addAttribute("memberDTO", new MemberDTO());
 
         return "member/loginForm";
     }

@@ -27,16 +27,16 @@ public class CategoryController {
     private final MemberRepository memberRepository;
 
     @GetMapping("/category/{memberId}/list")
-    public String categoryList(@PathVariable("memberId") String memberId, Model model){
+    public String categoryList(@PathVariable("memberId") String memberId, Model model) {
 
 
         List<Category> expenseList = categoryService.findCategoriesByType(memberId, Money_type.expense);
-        List<Category> incomeList = categoryService.findCategoriesByType(memberId,Money_type.income);
+        List<Category> incomeList = categoryService.findCategoriesByType(memberId, Money_type.income);
         Category category = new Category();
 
-        model.addAttribute("expenseList",expenseList);
-        model.addAttribute("incomeList",incomeList);
-        model.addAttribute("category",category);
+        model.addAttribute("expenseList", expenseList);
+        model.addAttribute("incomeList", incomeList);
+        model.addAttribute("category", category);
         model.addAttribute("money_types", Money_type.values());
 
 
@@ -44,9 +44,9 @@ public class CategoryController {
     }
 
     @PostMapping("/category/{memberId}/new")
-    public String setCategory(@PathVariable("memberId") String memberId, @ModelAttribute Category category){
+    public String setCategory(@PathVariable("memberId") String memberId, @ModelAttribute Category category) {
 
-        System.out.println("cateogryInfo :"+category.getCategory_name());
+        System.out.println("cateogryInfo :" + category.getCategory_name());
         Member member = memberRepository.findOne(memberId);
         category.setMember(member);
 
@@ -56,18 +56,11 @@ public class CategoryController {
     }
 
     @PostMapping("/category/{categoryId}/delete")
-    public String deleteCategory(@PathVariable("categoryId") String categoryId ){
-
-        System.out.println("nnn :"+categoryId);
+    public String deleteCategory(@PathVariable("categoryId") String categoryId) {
 
         categoryService.deleteCategory(Long.valueOf(categoryId));
-
-
-
         return "redirect:/category/{memberId}/list";
     }
-
-
 
 
 }

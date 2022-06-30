@@ -25,7 +25,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 
         Member member = memberRepository.findOne(memberId);
 
-        if(member != null){
+        if (member != null) {
             return new PrincipalDetails(member);
         }
 

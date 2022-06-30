@@ -9,24 +9,21 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name="except_budget")
+@Table(name = "except_budget")
 public class Except_budget extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @Column(name="except_budget_id")
+    @Column(name = "except_budget_id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="member_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @OneToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
-
-    @Enumerated(EnumType.STRING)
-    private Money_type type;
 
     private int amount;
 
@@ -35,4 +32,15 @@ public class Except_budget extends BaseEntity {
     private String memo;
 
 
+    public Except_budget() {
+
+    }
+
+    public Except_budget(Member member, Category category, int amount, String content, String memo) {
+        this.member = member;
+        this.category = category;
+        this.amount = amount;
+        this.content = content;
+        this.memo = memo;
+    }
 }

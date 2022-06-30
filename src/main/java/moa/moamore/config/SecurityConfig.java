@@ -18,16 +18,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public BCryptPasswordEncoder encodePwd(){
+    public BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
     }
 
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable(); // 비활성화
         http.authorizeRequests()
-                .antMatchers("/member/login", "/member/signup","/css/**","/img/**","/js/**","/vendor/**").permitAll()
+                .antMatchers("/member/login", "/member/signup", "/css/**", "/img/**", "/js/**", "/vendor/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header" />
+<head th:replace="fragments/header :: header"/>
 <style>
 
 
@@ -167,6 +167,7 @@ button{
 	padding:5px;
 
 }
+
 </style>
 <body id="page-top">
 
@@ -185,7 +186,7 @@ button{
         <div id="content">
 
             <!-- Topbar -->
-            <nav th:replace="fragments/topbar :: topbar" />
+            <nav th:replace="fragments/topbar :: topbar"/>
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
@@ -200,7 +201,8 @@ button{
                 <!-- 첫번째 줄 -->
                 <div class="row">
                     <div class="card mb-4">
-                        <form id="inputCateogry" name="input" th:action="@{/category/__${#authentication.name}__/new}" method="post" th:object="${category}">
+                        <form id="inputCateogry" name="input" th:action="@{/category/__${#authentication.name}__/new}"
+                              method="post" th:object="${category}">
                             <table>
                                 <tr>
                                     <td>카테고리 추가</td>
@@ -212,7 +214,8 @@ button{
                                                     th:value="${type}" th:text="${type}"></option>
                                         </select>
                                     </td>
-                                    <td><input type="text" name="category_name" id="category_name" th:field="*{category_name}" placeholder="카테고리명을 입력하세요" /> </td>
+                                    <td><input type="text" name="category_name" id="category_name"
+                                               th:field="*{category_name}" placeholder="카테고리명을 입력하세요"/></td>
                                     <td><input type="submit" value="추가" id="inputCategory"/></td>
                                 </tr>
                             </table>
@@ -222,10 +225,10 @@ button{
                 <div class="card-body">
                     <h4 class="mb-0 text-gray-800">지출 카테고리</h4>
                     <form class='allExpense'>
-                        <table class='my_tab' >
+                        <table class='my_tab'>
                             <tr>
-                                <th:block th:each="category,index : ${expenseList}" >
-                                    <td class='my_td border-left-primary shadow' >
+                                <th:block th:each="category,index : ${expenseList}">
+                                    <td class='my_td border-left-primary shadow'>
                                         <div class='cat_btn'>
                                             <i class='fas fa-ellipsis-v'></i>
                                             <div class='my_sub'>
@@ -235,8 +238,10 @@ button{
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class='cat_text font-weight-bold' th:utext="${category.category_name}"></div>
-                                        <input type='hidden' name='category_no' class='category_no' th:value="${category.id}">
+                                        <div class='cat_text font-weight-bold'
+                                             th:utext="${category.category_name}"></div>
+                                        <input type='hidden' name='category_no' class='category_no'
+                                               th:value="${category.id}">
                                     </td>
                                 </th:block>
                             </tr>
@@ -247,10 +252,10 @@ button{
                 <div class="card-body">
                     <h4>수입 카테고리</h4>
                     <form class='allIncome'>
-                        <table class='my_tab' >
+                        <table class='my_tab'>
                             <tr>
-                                <th:block th:each="category,index : ${incomeList}" >
-                                    <td class='my_td border-left-primary shadow' >
+                                <th:block th:each="category,index : ${incomeList}">
+                                    <td class='my_td border-left-primary shadow'>
                                         <div class='cat_btn'>
                                             <i class='fas fa-ellipsis-v'></i>
                                             <div class='my_sub'>
@@ -260,8 +265,10 @@ button{
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class='cat_text font-weight-bold' th:utext="${category.category_name}"></div>
-                                        <input type='hidden' name='category_no' class='category_no' th:value="${category.id}">
+                                        <div class='cat_text font-weight-bold'
+                                             th:utext="${category.category_name}"></div>
+                                        <input type='hidden' name='category_no' class='category_no'
+                                               th:value="${category.id}">
                                     </td>
                                 </th:block>
                             </tr>
@@ -276,7 +283,8 @@ button{
                             <span class="close-button">&times;</span>
                         </div>
                         <div class="modifyContent card-body">
-                            <textarea rows="2" style="width:310px" name='newName' class='newName' placeholder='카테고리 이름을 입력해주세요'></textarea>
+                            <textarea rows="2" style="width:310px" name='newName' class='newName'
+                                      placeholder='카테고리 이름을 입력해주세요'></textarea>
                             <div class="buttonDiv">
                                 <button class='modifyCategory'>변경</button>
                                 <button class='cancel'>취소</button>
@@ -288,7 +296,7 @@ button{
             <!-- End of Main Content -->
 
         </div>
-        <footer th:replace="fragments/footer :: footer" />
+        <footer th:replace="fragments/footer :: footer"/>
 
     </div>
     <!-- End of Content Wrapper -->
@@ -302,8 +310,6 @@ button{
 </a>
 
 </body>
-
-
 
 
 </html>
@@ -394,5 +400,6 @@ function modifyAction(category_no,inorout){
 
 	});
 }
+
 
 </script>

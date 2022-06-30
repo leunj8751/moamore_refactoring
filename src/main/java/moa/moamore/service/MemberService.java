@@ -19,7 +19,7 @@ public class MemberService {
     private final CategoryService categoryService;
 
 
-    public void join(Member member){
+    public void join(Member member) {
 
         checkMemberDuplicate(member);
         memberRepository.save(member);
@@ -30,7 +30,7 @@ public class MemberService {
     private void checkMemberDuplicate(Member member) {
         List<Member> findMembers = memberRepository.findByName(member.getId());
 
-        if(!findMembers.isEmpty()){
+        if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }

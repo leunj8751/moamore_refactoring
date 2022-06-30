@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -40,11 +41,11 @@ public class BudgetServiceTest {
     private BudgetRepository budgetRepository;
 
     @Test
-    public void 새로운예산설정(){
+    public void 새로운예산설정() {
 
         String member_id = "leunj8752";
 
-        Member member = new Member(member_id,"1234","까비");
+        Member member = new Member(member_id, "1234", "까비");
         memberService.join(member);
 
 
@@ -54,11 +55,11 @@ public class BudgetServiceTest {
         List<Category> categoryList = categoryService.getExpenseCategories(member_id);
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
-        for(Category c : categoryList){
-            if(c.getCategory_name().equals("건강")){
-                categoryDTOList.add(new CategoryDTO(c.getId(), c.getCategory_name(),100000));
-            }else if(c.getCategory_name().equals("교육")){
-                categoryDTOList.add(new CategoryDTO(c.getId(), c.getCategory_name(),100000));
+        for (Category c : categoryList) {
+            if (c.getCategory_name().equals("건강")) {
+                categoryDTOList.add(new CategoryDTO(c.getId(), c.getCategory_name(), 100000));
+            } else if (c.getCategory_name().equals("교육")) {
+                categoryDTOList.add(new CategoryDTO(c.getId(), c.getCategory_name(), 100000));
             }
             categoryDTOList.add(new CategoryDTO(c.getId(), c.getCategory_name()));
         }
@@ -74,15 +75,15 @@ public class BudgetServiceTest {
 
         Budget budget = budgetRepository.findOne(member);
 
-        List<Budget_category> budget_categoryList = budgetRepository.findBudget_category(member,budget);
+        List<Budget_category> budget_categoryList = budgetRepository.findBudget_category(member, budget);
 
         //상태가 맞게 들어갔는지
-        assertEquals(Budget_status.ongoing,budget.getBudget_status());
+        assertEquals(Budget_status.ongoing, budget.getBudget_status());
         //기간이 맞게 들어갔는지
-        assertEquals(7,budget.getPeriod().intValue());
+        assertEquals(7, budget.getPeriod().intValue());
 
 
-        assertEquals(2,budget_categoryList.size());
+        assertEquals(2, budget_categoryList.size());
 
         // 새로운 예산이 시작되면 이전 예산의 상태는 end로 바껴야함
 

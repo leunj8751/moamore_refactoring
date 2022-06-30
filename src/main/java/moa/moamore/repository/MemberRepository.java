@@ -14,18 +14,18 @@ public class MemberRepository {
 
     private final EntityManager em;
 
-    public Member findOne(String id){
-        return em.find(Member.class,id);
+    public Member findOne(String id) {
+        return em.find(Member.class, id);
     }
 
-    public void save(Member member){
+    public void save(Member member) {
         em.persist(member);
     }
 
 
     public List<Member> findByName(String id) {
-        return em.createQuery("select m from Member m where m.id = :id",Member.class)
-                .setParameter("id",id)
+        return em.createQuery("select m from Member m where m.id = :id", Member.class)
+                .setParameter("id", id)
                 .getResultList();
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HoneController {
 
     @RequestMapping("/")
-    public String main(){
+    public String main() {
         return "index";
     }
 
