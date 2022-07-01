@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +88,24 @@ public class BudgetServiceTest {
 
 
     }
+
+
+    @Test
+    public void categoryFindTopExpense(){
+
+
+
+        List<Budget_expense> categoryList = budgetService.findBudgetExpenseList(LocalDate.now(),"");
+
+        System.out.println("size :"+categoryList.size());
+
+        for(Budget_expense be : categoryList){
+            System.out.println("dddate :"+be.getCreated_date());
+            System.out.println("content"+be.getContent());
+        }
+
+    }
+
 
 
 }

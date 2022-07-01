@@ -28,7 +28,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/moamore/main.moa">
+        <a class="nav-link" href="/budget/report">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>대시보드</span></a>
     </li>
@@ -44,132 +44,32 @@
         예산 관리
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBudget" aria-expanded="true"
-           aria-controls="collapseBudget">
+        <a class="nav-link" href="/budget/new">
             <i class="fas fa-fw fa-coins"></i>
-            <span>예산</span>
-        </a>
-        <div id="collapseBudget" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">예산</h6>
-                <a class="collapse-item" href="/moamore/budget/todayBudget.moa">오늘의 예산</a>
-                <a class="collapse-item" href="/budget/setBudget">예산 설정</a>
-            </div>
-        </div>
+            <span>예산 설정</span></a>
     </li>
-
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="/budget/moneyRecord">
+        <a class="nav-link" href="/budget/record">
             <i class="fas fa-fw fa-list-ul"></i>
             <span>수입/지출내역</span></a>
     </li>
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="/moamore/calendar/calendar.moa">
-            <i class="fas fa-fw fa-calendar-alt"></i>
-            <span>달력</span></a>
+        <a class="nav-link" href="/budget/report">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>보고서</span></a>
     </li>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true"
-           aria-controls="collapseReport">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>보고서</span>
-        </a>
-        <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">보고서</h6>
-                <a class="collapse-item" href="/budget/report">예산 보고서</a>
-                <a class="collapse-item" href="/moamore/report/expectation.moa" id="expectation"
-                   onclick="$('#loading').css('display','flex');">데이터 분석</a>
-            </div>
-        </div>
-    </li>
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="/moamore/search/searchForm.moa">
-            <i class="fas fa-fw fa-search"></i>
-            <span>검색</span></a>
-    </li>
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGoal" aria-expanded="true"
-           aria-controls="#collapseGoal">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>목표</span>
-        </a>
-        <div id="collapseGoal" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">목표</h6>
-                <a class="collapse-item" href="/moamore/goals/myGoalList.moa">진행중인 목표</a>
-                <a class="collapse-item" href="/moamore/goals/completeGoalList.moa">완료한 목표</a>
-            </div>
-        </div>
-    </li>
+
+
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" th:href="@{/category/__${#authentication.name}__/list}">
             <i class="fas fa-fw fa-cog"></i>
-            <span>설정</span></a>
+            <span>카테고리 설정</span></a>
     </li>
-
-
-    <!-- 예산 탭 끝 -->
-    <!-- 커뮤니티탭 시작 -->
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        커뮤니티
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-           aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-coins"></i>
-            <span>그룹</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">그룹</h6>
-                <a class="collapse-item" href="/moamore/team/groupList.moa?isMyTeam=0">전체 그룹 보기</a>
-                <a class="collapse-item" href="/moamore/team/groupMyRequestList.moa?nickname=${sessionScope.memName}">My
-                    개설 신청 리스트</a>
-                <a class="collapse-item" href="/moamore/team/groupList.moa?isMyTeam=1">내가 가입한 그룹 보기</a>
-                <a class="collapse-item" href="/moamore/team/groupComeInviteList.moa">나를 초대한 그룹 보기</a>
-
-            </div>
-        </div>
-    </li>
-
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-list-ul"></i>
-            <span>랭킹 보기</span></a>
-    </li>
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="/moamore/closing/closingAccountList.moa">
-            <i class="fas fa-fw fa-list-ul"></i>
-            <span>결산 게시판</span></a>
-    </li>
-
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <div style="width:100%; display:flex; justify-content:center;">
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline" style="">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-    </div>
-
 </ul>

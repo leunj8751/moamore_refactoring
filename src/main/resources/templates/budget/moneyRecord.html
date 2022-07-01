@@ -138,9 +138,24 @@
 
 <script>
 
+	$(document).ready(function(){
 
-
-
+		$("#searchbth").on('click', function(){
+             $.ajax({
+				url:"/budget/moneyRecordContent",
+				type:'GET',
+				data:{
+					"date":$('#searchDate').val(),
+					"content":$('#searchKeyword').val()
+				},
+				success:function(data){
+				    console.log("data :",data);
+				    $("#moneyLog").empty();
+					$("#moneyLog").append(data);
+				}
+			});
+		});
+	});
 
 	function popupRecordForm(){
 

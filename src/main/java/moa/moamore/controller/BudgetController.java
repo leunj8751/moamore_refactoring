@@ -1,35 +1,26 @@
 package moa.moamore.controller;
 
-import com.google.gson.JsonArray;
 import lombok.RequiredArgsConstructor;
 import moa.moamore.auth.PrincipalDetails;
-import moa.moamore.domain.*;
+import moa.moamore.domain.Budget;
+import moa.moamore.domain.Budget_expense;
+import moa.moamore.domain.Category;
+import moa.moamore.domain.Money_type;
 import moa.moamore.dto.BudgetDTO;
 import moa.moamore.dto.CategoryDTO;
 import moa.moamore.dto.ExpenseRecordDTO;
 import moa.moamore.repository.CategoryRepository;
-import moa.moamore.repository.MemberRepository;
 import moa.moamore.service.BudgetService;
 import moa.moamore.service.CategoryService;
-import org.apache.catalina.Session;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.google.gson.Gson;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -40,11 +31,8 @@ public class BudgetController {
     private final BudgetService budgetService;
 
 
-    @GetMapping("/budget/setBudget")
-    public String setBudgetForm(Model model, Authentication authentication) {
-
-        PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
-        String memberId = userDetails.getUsername();
+    @GetMapping("/budget/{memberId}/new")
+    public String setForm(@PathVariable("memberId") String memberId, Model model) {
 
         List<Category> categoryList = categoryService.getExpenseCategories(memberId);
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
@@ -62,8 +50,7 @@ public class BudgetController {
         return "budget/setBudget";
     }
 
-
-    @PostMapping("/budget/setBudget")
+    @PostMapping("/budget/new")
     public String setBudget(@ModelAttribute BudgetDTO budgetDTO) {
 
         budgetService.setNewBudget(budgetDTO);
@@ -122,15 +109,32 @@ public class BudgetController {
     }
 
     @GetMapping("/budget/reportContent")
-    public String budgetReportContent(@RequestParam("budgetId") Long budgetId, Model model) {
-
+    public String reportContentForm(@RequestParam("budgetId") Long budgetId, Model model) {
+        System.out.println("budgetId :"+budgetId);
         List<Budget_expense> expenseList = budgetService.findTopExpense(budgetId);
         List<Budget_expense> categoryList = categoryService.findTopExpense(budgetId);
+        System.out.println(categoryList.size());
+        System.out.println("sum_amount :"+categoryList.get(0).getCategory().getCategory_name());
+
 
         model.addAttribute("expenseList", expenseList);
         model.addAttribute("categoryList", categoryList);
 
         return "/budget/reportContent";
+    }
+
+    @GetMapping("/budget/moneyRecordContent")
+    public String moneyLogForm(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd")  LocalDate date,
+           @RequestParam("content") String content , Model model) {
+
+        System.out.println("date :"+date);
+        System.out.println("content :"+ content);
+
+        List<Budget_expense> expenseList = budgetService.findBudgetExpenseList(date,content);
+        System.out.println("size :"+expenseList.size());
+        model.addAttribute("expenseList", expenseList);
+
+        return "/budget/moneyRecordContent";
     }
 
 }

@@ -2,7 +2,7 @@
     <!-- 보고서 첫줄 -->
     <div class="row">
         <!-- 일별 예산 소진율 -->
-        <div class="col-xl-9 col-lg-7">
+        <div class="col-xl-12 col-lg-7">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -25,25 +25,6 @@
                 </div>
             </div>
         </div>
-        <!-- 예산 분석 -->
-        <div class="col-xl-3 col-lg-7">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">예산 분석</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    예산 기간 : <br/>
-                    <!--                    <fmt:formatDate pattern="yyyy.MM.dd" value="${TBdto.start_day}"/> ~-->
-                    <!--                    <fmt:formatDate pattern="yyyy.MM.dd" value="${TBdto.end_day}"/>-->
-                    <!--                    <br/>-->
-                    <!--                    <hr/>-->
-                    <!--                    총 예산 : <br/><Strong><fmt:formatNumber value="${TBdto.budget }" pattern="#,###" />원 </Strong><br/>-->
-                    <!--                    실제 총 예산 지출 : <br/><Strong><fmt:formatNumber value="${Tsum}" pattern="#,###" />원 </Strong><br/>-->
-                </div>
-            </div>
-        </div>
     </div>
     <!-- 첫줄 끝 -->
 
@@ -62,16 +43,8 @@
                         <tr th:each="expense, index : ${expenseList}">
                             <td th:text="${index.count}"></td>
                             <td th:text="${{expense.content}}"></td>
-                            <td th:text="${{expense.amount}}"></td>
+                            <td th:text="${{expense.amount}}"><p>원</p></td>
                         </tr>
-                        <!--                        <c:forEach items="${amountList}" var="it" varStatus="st">-->
-                        <!--                            <tr>-->
-                        <!--                                <td>${st.index+1 }</td>-->
-                        <!--                                <td>${it.CONTENT }</td>-->
-                        <!--                                <td>${it.CNT}건</td>-->
-                        <!--                                <td><fmt:formatNumber pattern="#,###" value="${it.TSUM}"/>원</td>-->
-                        <!--                            </tr>-->
-                        <!--                        </c:forEach>-->
                     </table>
                 </div>
             </div>
@@ -89,17 +62,9 @@
                     <table class="table table-bordered">
                         <tr th:each="category, index : ${categoryList}">
                             <td th:text="${index.count}"></td>
-                            <td th:text="${{category.budget}}"></td>
-                            <td th:text="${{category.}}"></td>
+                            <td th:text="${{category.category.category_name}}"></td>
+                            <td th:text="${{category.sum_amount}}+'원'"></td>
                         </tr>
-                        <!--                        <c:forEach items="${countList}" var="it" varStatus="st">-->
-                        <!--                            <tr>-->
-                        <!--                                <td><span class="paginate_button page-item active" >${st.index+1 }</span></td>-->
-                        <!--                                <td>${it.CONTENT }</td>-->
-                        <!--                                <td>${it.CNT}건</td>-->
-                        <!--                                <td><fmt:formatNumber pattern="#,###" value="${it.TSUM}"/>원</td>-->
-                        <!--                            </tr>-->
-                        <!--                        </c:forEach>-->
                     </table>
                 </div>
             </div>
@@ -111,9 +76,9 @@
 <script src="/vendor/chart.js/Chart.min.js"></script>
 <script type="text/javascript">
 	  	var ctx = document.getElementById("myBarChart");
-		var labelList = ${labelList};
-		var dataList = ${dataList};
-		var max = ${max};
+		var labelList = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+		var dataList = [12, 19, 3, 5, 2, 3];
+		var max = 15;
 
 </script>
 <script src="/js/report/dailyBar.js"></script>

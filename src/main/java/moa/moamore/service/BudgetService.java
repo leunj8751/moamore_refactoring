@@ -9,7 +9,6 @@ import moa.moamore.dto.ExpenseRecordDTO;
 import moa.moamore.repository.BudgetRepository;
 import moa.moamore.repository.CategoryRepository;
 import moa.moamore.repository.MemberRepository;
-import org.apache.tomcat.util.net.jsse.JSSEUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,7 +31,7 @@ public class BudgetService {
         Budget budget = Budget.createBudget(member, budgetDTO.getTotal_budget(), Budget_period.valueOf(budgetDTO.getPeriod()));
 
         //budget이 존재하면 이전 버짓은 end로 끝나야 함
-        Budget findBudget = budgetRepository.findBudget(LocalDate.now());
+        Budget findBudget = budgetRepository.findOne(LocalDate.now());
         if (findBudget != null) {
             findBudget.endBudget();
             budgetRepository.save(findBudget);
@@ -58,7 +57,7 @@ public class BudgetService {
     public void saveExpenseRecord(ExpenseRecordDTO expenseRecordDTO) {
 
 
-        Budget budget = budgetRepository.findBudget(expenseRecordDTO.getDate());
+        Budget budget = budgetRepository.findOne(expenseRecordDTO.getDate());
         System.out.println("budget :" + budget);
         Category category = categoryRepository.findOne(expenseRecordDTO.getCategoryId());
         Member member = memberRepository.findOne(expenseRecordDTO.getMemberId());
@@ -84,7 +83,7 @@ public class BudgetService {
 
     private boolean existBudget(ExpenseRecordDTO expenseRecordDTO) {
 
-        Budget budget = budgetRepository.findBudget(expenseRecordDTO.getDate());
+        Budget budget = budgetRepository.findOne(expenseRecordDTO.getDate());
         if (budget == null) {
             return false;
         }
@@ -114,8 +113,7 @@ public class BudgetService {
     }
 
     public List<CategoryDTO> findBudgetExpenseCategories(LocalDate date) {
-        Budget budget = budgetRepository.findBudget(date);
-        System.out.println("budgetId :" + budget.getId());
+        Budget budget = budgetRepository.findOne(date);
         List<Budget_category> budget_categoryList = budgetRepository.findBudget_category(budget);
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
@@ -124,5 +122,10 @@ public class BudgetService {
         }
 
         return categoryDTOList;
+    }
+
+    public List<Budget_expense> findBudgetExpenseList(LocalDate date,String content) {
+
+        return budgetRepository.findBudgetExpenseList(date,content);
     }
 }

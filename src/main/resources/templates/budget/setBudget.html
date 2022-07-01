@@ -71,11 +71,9 @@
                         <hr/>
                         <br/>
                         <div id="step1" style="transition:.5s;" class="animated--fade-in">
-                            <p>현재 진행중인 예산이 없습니다!</p>
-                            <p>예산설정을 완료해주세요.</p>
                             <button id="nextBtn1">새로운 예산 만들기</button>
                         </div>
-                        <form action="#" method="post" th:action="@{/budget/setBudget}" th:object="${budgetDTO}">
+                        <form action="#" method="post" th:action="@{/budget/__${#authentication.name}__/new}" th:object="${budgetDTO}">
                             <input type="hidden" th:field=*{memberId}>
                             <div id="step2" style="transition:.5s;display:none;" class="animated--fade-in">
                                 <ul id="setTB">
@@ -91,9 +89,6 @@
                                             <span class="helpSpan">(예산 기간을 고르세요.)</span>
                                         </div>
                                     </li>
-                                    <!--                                        <jsp:useBean id="now" class="java.util.Date" />-->
-                                    <!--                                        <fmt:formatDate value="${now}" pattern="dd" var="todayDate" />-->
-                                    <!--                                        <fmt:formatDate value="${now}" pattern="yyyy년 MM월 dd일" var="today" />-->
                                     <li id="startday" style="display:none">월 시작일 : 매월 <input type="number" min="1"
                                                                                              max="28"
                                                                                              name="firstOfMonth"
@@ -217,7 +212,6 @@
 
 			})
 		});
-
 
 
 		//총예산, 카테고리별 금액, 주기가 변경될때마다 '하루예산'계산

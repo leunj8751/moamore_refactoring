@@ -1,15 +1,21 @@
 package moa.moamore.repository;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import moa.moamore.domain.*;
-import moa.moamore.dto.CategoryDTO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static moa.moamore.domain.QBudget_expense.budget_expense;
+import static moa.moamore.domain.QExcept_budget.except_budget;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,7 +23,7 @@ import java.util.List;
 public class BudgetRepository {
 
     private final EntityManager em;
-
+    private final JPAQueryFactory queryFactory;
 
     @Transactional
     public void save(Budget budget) {
@@ -56,6 +62,22 @@ public class BudgetRepository {
         return em.find(Budget.class, id);
     }
 
+
+    public Budget findOne(LocalDate date) {
+
+        List<Budget> budgetList = em.createQuery("select b from Budget b where b.start_day <= :date and b.end_day >= :date", Budget.class)
+                .setParameter("date", date)
+                .setParameter("date", date)
+                .getResultList();
+
+        if (budgetList.size() > 0) {
+            return budgetList.get(0);
+        } else {
+            return null;
+        }
+    }
+
+
     //member 없어도 되지 않나?
     public List<Budget_category> findBudget_category(Member member, Budget budget) {
         return em.createQuery("select b from Budget_category b where b.member = :member and b.budget =:budget", Budget_category.class)
@@ -78,19 +100,7 @@ public class BudgetRepository {
                 .getSingleResult();
     }
 
-    public Budget findBudget(LocalDate date) {
 
-        List<Budget> budgetList = em.createQuery("select b from Budget b where b.start_day <= :date and b.end_day >= :date", Budget.class)
-                .setParameter("date", date)
-                .setParameter("date", date)
-                .getResultList();
-
-        if (budgetList.size() > 0) {
-            return budgetList.get(0);
-        } else {
-            return null;
-        }
-    }
 
     public List<Budget> findBudgetList(Member member) {
         return em.createQuery("select b from Budget b where b.member = :member", Budget.class)
@@ -113,4 +123,31 @@ public class BudgetRepository {
                 .setMaxResults(3)
                 .getResultList();
     }
+
+    public List<Budget_expense> findBudgetExpenseList(LocalDate date,String content) {
+
+        return queryFactory.select(
+                        Projections.fields(Budget_expense.class,
+                                budget_expense.category,
+                                budget_expense.amount,
+                                budget_expense.content)
+                ).from(budget_expense,except_budget)
+                .fetch();
+
+    }
+
+    private BooleanExpression eqContent(String content) {
+        if (StringUtils.isEmpty(content)) {
+            return null;
+        }
+        return budget_expense.content.eq(content);
+    }
+
+    private BooleanExpression eqDate(LocalDate date) {
+        if (StringUtils.isEmpty(String.valueOf(date))) {
+            return null;
+        }
+        return budget_expense.created_date.eq(LocalDateTime.from(date));
+    }
+
 }

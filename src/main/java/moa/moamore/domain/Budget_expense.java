@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -32,6 +31,7 @@ public class Budget_expense extends BaseEntity {
 
     private String memo;
 
+    private int sum_amount;
 
     public Budget_expense(Budget budget, Category category, int amount, String content, String memo) {
         this.budget = budget;
