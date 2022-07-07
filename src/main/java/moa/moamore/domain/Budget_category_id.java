@@ -14,6 +14,5 @@ public class Budget_category_id implements Serializable {
 
     private Category category;
     private Budget budget;
-    private Member member;
 
 }

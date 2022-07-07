@@ -14,7 +14,6 @@ ul{
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	background: url(../resources/img/select_arrow.png) no-repeat 95% 50%;
 	width:170px;
 	height:38px;
 	margin-top: 5px;
@@ -65,17 +64,7 @@ ul{
 	margin: 7px 0px;
 	padding: 6px 12px;
 }
-/* 파일 선택시 선택된 파일명이 붙는 것을 가려줌 */
-.fileRegiBtn input[type="file"]{
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip:rect(0,0,0,0);
-	border: 0;
-}
+
 
     </style>
 
@@ -107,50 +96,30 @@ ul{
                     <div class="form-group">
 
                         <form id="recordForm" method="post" th:object="${budget_expense}"
-                              action="/budget/expenseRecord">
+                              action="/budget/record">
                             <!--                             데이터 넘어갈 때 수입인지 지출인지 예산내 지출인지도 보내줘야한다. -->
-                            <input type="hidden" id="type" name="type" value="type"/>
+                            <input type="text" id="type" name="type" value="type"/>
                             <input type="hidden" id="budget_no" name="budget_no" value="${budgetNum}"/>
                             <input type="hidden" id="category_no" name="category_no" value="0"/>
-                            <input type="text" id="memberId" name="memberId" th:value="${#authentication.name}">
+                            <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.name}">
                             <div class="animated--fade-in">
                                 <div class="header">
                                     <input id="checkbox" type="checkbox"/> 예산 외 선택 </br>
-                                    <!-- 지출 수입 버튼은 예산외 버튼 선택해야 보임 -->
                                     <div>
-                                        <input type="button" class="btn btn-light" value="지출" id="outcomebtn"
-                                               name="outcomebtn" style="position: relative"/>
-                                        <input type="button" class="btn btn-light" value="수입" id="incomebtn"
-                                               name="incomebtn" style="position: relative"/>
+                                        <input type="button" class="btn btn-light" value="지출" id="expense"
+                                               name="expense" style="position: relative"/>
+                                        <input type="button" class="btn btn-light" value="수입" id="income"
+                                               name="income" style="position: relative"/>
                                     </div>
                                 </div>
                                 <div class="content">
                                     <ul>
                                         <li>
-                                            <!-- 날짜 시간  -->
                                             <div>
                                                 <input type="date" id="date" name="date" class="inputBox"/>
                                             </div>
                                         </li>
                                         <li class="category-section">
-                                            <!--                                             지출 카테고리 -->
-                                            <!--                                            <div class="input-area">-->
-                                            <!--                                                <select id="outcomecategory" name="outcomecategory" class="cateSelectBox">-->
-                                            <!--                                                    <option th:each="category : ${expenseList}"-->
-                                            <!--                                                            th:value="${category.id}"-->
-                                            <!--                                                            th:text="${category.category_name}" />-->
-                                            <!--                                                </select>-->
-                                            <!--                                            </div>-->
-                                            <!--&lt;!&ndash;                                             수입 카테고리 &ndash;&gt;-->
-                                            <!--                                            <div class="input-area">-->
-                                            <!--                                                <select id="incomecategory" name="incomecategory" class="cateSelectBox" >-->
-                                            <!--                                                   <option th:each="category : ${incomeList}"-->
-                                            <!--                                                            th:value="${category.id}"-->
-                                            <!--                                                            th:text="${category.category_name}" />-->
-                                            <!--                                                </select>-->
-                                            <!--                                            </div>-->
-                                            <!--                                            예산내 지출 카테고리 -->
-                                            <!--                                           categories 번호가 key 이름이 value -->
                                             <div class="input-area">
                                                 <select id="categoryId" name="categoryId" class="cateSelectBox">
                                                     <option th:each="category : ${expenseList}"
@@ -193,9 +162,9 @@ ul{
 </div>
 </body>
 <script>
-	// 체크박스 상태 확인(체크된 상태면 nobudget 아니면 budget)
+
 	$(document).ready(function(){
-		console.log("타입 :"  + $("#type").val());
+
 		// input 태그 중 date 에도 기본값으로 오늘 날짜 넣어주기
 		$("#date").val("${today}");
 
@@ -203,75 +172,34 @@ ul{
 		// 처음엔 수입 지출 카테고리/수입지출 버튼 숨기기 (예산지출이 기본)
 		$("#incomecategory").css("display", "none");
 		$("#outcomecategory").css("display", "none");
-		$("#outcomebtn").hide();
-		$("#incomebtn").hide();
+		$("#expense").hide();
+		$("#income").hide();
 
 		$("#checkbox").change(function(){
 			if($("#checkbox").is(":checked")){ // 예산외 선택에 체크가 되어있으면
 
 				// 예산 관련된거 없어져야함
-				$("#incomebtn").show();
-				$("#outcomebtn").show();
+				$("#income").show();
+				$("#expense").show();
 				$("#categoryId").css("display", "none");
 			}else{
 				$("#type").val("budget");
-				$("#outcomebtn").hide();
-				$("#incomebtn").hide();
+				$("#expense").hide();
+				$("#income").hide();
 				$("#categoryId").css("display", "block");
 				$("#outcomecategory").css("display", "none");
 				$("#incomecategory").css("display", "none");
 			}
 		});
 
-<!--		$("#date").on('change',function(){-->
-<!--			if($("#checkbox").is(":checked")){-->
-<!--			}else{-->
-<!--				// 예산일 달력 체크하면 값 가져오게 처리-->
-<!--				//$("#type").val("budgetOutcome");-->
-<!--				$("#type").val("budget");-->
-
-<!--				// 예산 카테고리 가져오기위해 컨트롤러로 값 보내기 ajax-->
-<!--                    console.log("eeeeeeeeeeee :"+$("#date").val());-->
-<!--                    console.log("eeeeeeeeeeee :"+$('#memberId').val());-->
-<!--                    $.ajax({-->
-<!--                        url:"/budget/budgetCategory",-->
-<!--                        type:'GET',-->
-<!--                        data:{-->
-<!--                            "memberId":$("#memberId").val(),-->
-<!--                            "date" : $("#date").val()-->
-<!--                        },-->
-<!--                        success : function(data){-->
-<!--                            console.log("data :",data);-->
-<!--                            console.log("data :",data['list']);-->
-<!--                            // 기간에 해당하는 예산의 카테고리로 셀렉트 옵션 새로 바꿔주기-->
-<!--                            $("#categoryId").find("option").remove(); // 기존 카테고리 셀렉트 옵션 삭제-->
-<!--                            for(var key in data){-->
-
-
-<!--                                console.log(key);-->
-<!--                                if(key != 'budgetNum'){-->
-<!--                                    $("#categoryId").append("<option value='"+key+"'>"+data[key]+"</option>");-->
-<!--                                }else{ // budgetNum 이면 변수에 담아주기-->
-<!--                                    budget_no = data[key];-->
-<!--                                }-->
-<!--                            }-->
-<!--                            $("#categoryId").css("display", "block");-->
-<!--                        }-->
-<!--                    });-->
-
-<!--			}-->
-<!--		});-->
 
 		// 버튼 누를 때마다 카테고리 나타내기/숨기기
-		$("#outcomebtn").click(function(){ // 지출 카테고리로 세팅
-			$("#outcomebtn").attr('class','btn btn-primary');
-			$("#incomebtn").attr('class','btn btn-light');
+		$("#expense").click(function(){ // 지출 카테고리로 세팅
+			$("#expense").attr('class','btn btn-primary');
+			$("#income").attr('class','btn btn-light');
 			$("#outcomecategory").css("display", "block");
 			$("#incomecategory").css("display", "none");
-			$("#type").val("outcome");
-			console.log($("#type").val());
-			console.log("셀렉트 박스 옵션값은 ???? ");
-			console.log($("#outcomecategory option:selected").val())
+			$("#type").val("expense");
 			$("#category_no").val($("#outcomecategory option:selected").val());
 			// 카테고리 선택하면 hidden으로 값넘겨주기
 			$("#outcomecategory").change(function(){
@@ -280,49 +208,17 @@ ul{
 			});
 
 		});
-		$("#incomebtn").click(function(){ // 수입 카테고리로 세팅
-			$("#incomebtn").attr('class','btn btn-primary');
-			$("#outcomebtn").attr('class','btn btn-light');
+		$("#income").click(function(){ // 수입 카테고리로 세팅
+			$("#income").attr('class','btn btn-primary');
+			$("#expense").attr('class','btn btn-light');
 			$("#incomecategory").css("display", "block");
 			$("#outcomecategory").css("display", "none");
 			$("#type").val("income");
-			console.log($("#type").val());
-			console.log("셀렉트 박스 옵션값은 ???? ");
 			$("#category_no").val($("#incomecategory option:selected").val());
 			$("#incomecategory").change(function(){
-				console.log($(this).val())
 				$("#category_no").val($("#incomecategory option:selected").val());
 				$("#type").val("income");
 			});
-		});
-		$("#check").click(function(){
-			//////////////////////////////////////
-			console.log("타입체크 : "+$("#type").val());
-			if($("#type").val() == "type"){
-				$("#type").val("budget");
-			}
-			// budgetNum도 hidden으로 보내주기
-			if(budget_no != 0){
-				var intBudget_no = Number(budget_no);
-				//console.log(typeof intBudget_no);
-				$("#budget_no").val(intBudget_no);
-			}
-			// category_no 예산일 때만 카테고리 넘버 보내주기
-			if($("#type").val() == "budget"){
-				//$("#type").val("type");
-				type="budget";
-				console.log("카테고리 : " +  $("#category option:selected").val());
-				var selectedOption = $("#category option:selected").val();
-
-				var numberOption = Number(selectedOption);
-				$("#category_no").val(numberOption);
-				console.log(typeof numberOption);
-				console.log("카테고리 번호" + numberOption);
-			}
-
-			console.log($("#category_no").val());
-			console.log($("#image").val());
-			$("#recordForm").submit();
 		});
 
 	});

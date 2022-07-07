@@ -7,10 +7,9 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/moamore/main.moa">
         <div class="sidebar-brand-icon">
             <!-- <i class="fas fa-laugh-wink"></i> -->
-            <img src="/moamore/resources/img/whitepigF.png" width="50" height="50"/>
+            <img src="/img/whitepigF.png" width="50" height="50"/>
         </div>
         <div class="sidebar-brand-text mx-3">모아 & More</div>
-
     </a>
 
     <!-- Divider -->
@@ -28,7 +27,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/budget/report">
+        <a class="nav-link" th:href="@{/budget/__${#authentication.name}__/report}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>대시보드</span></a>
     </li>
@@ -45,7 +44,7 @@
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="/budget/new">
+        <a class="nav-link" th:href="@{/budget/__${#authentication.name}__/new}">
             <i class="fas fa-fw fa-coins"></i>
             <span>예산 설정</span></a>
     </li>
@@ -59,7 +58,7 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="/budget/report">
+        <a class="nav-link" th:href="@{/budget/__${#authentication.name}__/report}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>보고서</span></a>
     </li>

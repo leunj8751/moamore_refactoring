@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.List;
 import static moa.moamore.domain.QBudget_expense.budget_expense;
+import static moa.moamore.domain.QBudget.budget;
 
 
 @Repository
@@ -39,11 +40,11 @@ public class CategoryRepository {
 
     }
 
-    public List<Category> findByMemberAndType(Money_type type, Member member) {
+    public List<Category> findByMemberAndType(Money_type type, String memberId) {
 
-        return em.createQuery("select c from Category c where c.category_type = :type and c.member = :member", Category.class)
+        return em.createQuery("select c from Category c inner join c.member m on m.id = :memberId where c.category_type = :type", Category.class)
+                .setParameter("memberId", memberId)
                 .setParameter("type", type)
-                .setParameter("member", member)
                 .getResultList();
     }
 
@@ -52,24 +53,20 @@ public class CategoryRepository {
         return em.find(Category.class, id);
     }
 
-    @Transactional
-    public void delete(Category category) {
-        em.merge(category);
-    }
 
 
-    public List<Budget_expense> findTopExpense(Budget budget) {
+    public List<Budget_expense> findTopExpense(Long budgetId) {
 
         return queryFactory.select(
                 Projections.fields(Budget_expense.class,
                         budget_expense.category,
                         budget_expense.amount.sum().as("sum_amount"))
                 ).from(budget_expense)
-                .where(budget_expense.budget.eq(budget))
+                .join(budget_expense.budget,budget)
+                .where(budget.id.eq(budgetId))
                 .groupBy(budget_expense.category)
                 .orderBy(budget_expense.amount.sum().desc())
                 .fetch();
-
     }
 
 

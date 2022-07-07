@@ -1,13 +1,10 @@
 package moa.moamore.domain;
 
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Getter;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +18,13 @@ public class Budget extends BaseEntity {
     @Column(name = "budget_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     private int total_budget;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = Budget_periodConverter.class)
     private Budget_period period;
 
     private LocalDate start_day;
@@ -65,25 +62,25 @@ public class Budget extends BaseEntity {
     public static Budget createBudget(Member member, int total_budget, Budget_period budget_period) {
 
         LocalDate start_day = LocalDate.now();
-        LocalDate end_day = LocalDate.now().plusDays(budget_period.intValue());
+        LocalDate end_day = LocalDate.now().plusDays(budget_period.getValue());
 
         Budget budget = new Budget(member, total_budget, total_budget, budget_period, Budget_status.ongoing, start_day, end_day);
 
         return budget;
     }
 
-    public void addBudgetCategory(Budget_category budget_category) {
-        budget_categoryList.add(budget_category);
-    }
 
     public void minusAmount(int amount) {
         int restAmount = this.total_budget - amount;
-        this.total_budget = amount;
+        this.left_budget = restAmount;
     }
 
 
     public void endBudget() {
         this.budget_status = Budget_status.end;
+        this.end_day = LocalDate.now().minusDays(1);
     }
+
+
 
 }

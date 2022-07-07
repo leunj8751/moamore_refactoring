@@ -1,32 +1,5 @@
 <div class="container-fluid" xmlns:th="http://www.thymeleaf.org">
-    <!-- 보고서 첫줄 -->
-    <div class="row">
-        <!-- 일별 예산 소진율 -->
-        <div class="col-xl-12 col-lg-7">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">일별 예산 소진율</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-bar">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="myBarChart" width="657" height="320" class="chartjs-render-monitor"
-                                style="display: block; width: 657px; height: 320px;"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 첫줄 끝 -->
+
 
     <!-- 두번째 줄 -->
     <div class="row">
@@ -70,16 +43,24 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- Custom scripts for all pages-->
-<script src="/vendor/chart.js/Chart.min.js"></script>
-<script type="text/javascript">
+    <!-- Custom scripts for all pages-->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+
+        test();
+
+        function test(){
+        }
+
 	  	var ctx = document.getElementById("myBarChart");
 		var labelList = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
 		var dataList = [12, 19, 3, 5, 2, 3];
 		var max = 15;
 
-</script>
-<script src="/js/report/dailyBar.js"></script>
+    </script>
+    <script src="/js/report/dailyBar.js"></script>
+</div>
+
+
 

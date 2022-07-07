@@ -84,26 +84,13 @@
                                     </div>
                                 </div>
                                 <br/> <br/>
-                                <input type="hidden" id="type" name="type" value="type">
-                                <div class="custom-control custom-checkbox">
-                                    <label><input type="checkbox" name="recordChk" class="recordChk" id="budget"
-                                                  value="budget"/> 예산 </label>
-                                    <label><input type="checkbox" name="recordChk" class="recordChk" id="income"
-                                                  value="income"/> 수입(예산외)</label>
-                                    <label><input type="checkbox" name="recordChk" class="recordChk" id="outcome"
-                                                  value="outcome"/> 지출(예산외)</label>
-                                </div>
+                                <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.name}">
+
                                 <br/>
-                                <div class="input-group" style="justify-content:center;">
-                                    <button type="button" id="beforeBtn" class="btn btn-default btn-lg">
-                                        <i class="fas fa-angle-double-left" aria-hidden="true"></i>
-                                    </button>
-
+                                <div class="input-group " style="justify-content:center;">
+                                    <input id="checkbox" type="checkbox" style="margin-top:3px;"/> 예산 외 </br>
                                     <input type="date" name="searchDate" id="searchDate"/>
-
-                                    <button type="button" id="afterBtn" class="btn btn-default btn-lg">
-                                        <i class="fas fa-angle-double-right" aria-hidden="true"></i>
-                                    </button>
+                                    <input type="hidden" name="record_type" id = "record_type" />
                                 </div>
                                 <br/>
 
@@ -146,7 +133,8 @@
 				type:'GET',
 				data:{
 					"date":$('#searchDate').val(),
-					"content":$('#searchKeyword').val()
+					"content":$('#searchKeyword').val(),
+					"record_type":$('#record_type').val()
 				},
 				success:function(data){
 				    console.log("data :",data);
@@ -155,13 +143,25 @@
 				}
 			});
 		});
+
+
+		$("#checkbox").change(function(){
+			if($("#checkbox").is(":checked")){
+                $('#record_type').val("except");
+			}else{
+			    $('#record_type').val("budget");
+			}
+		});
+
+
 	});
 
 	function popupRecordForm(){
 
-		var url="/budget/recordForm";
+        var memberId = $("#memberId").val();
 
-		console.log("url :"+url);
+		var url="/budget/"+memberId+"/recordForm";
+
 		var popupX = (window.screen.width/2) - (500/2);
 		//&nbsp;만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
 		var popupY= (window.screen.height/2) - (600/2);

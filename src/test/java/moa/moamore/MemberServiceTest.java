@@ -8,7 +8,6 @@ import moa.moamore.repository.MemberRepository;
 import moa.moamore.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,19 +37,14 @@ public class MemberServiceTest {
         memberService.join(member);
 
         Member findMember = memberRepository.findOne(member.getId());
-        assertEquals(member.getId(), findMember.getId());
 
-
-        List<Category> categoryList = categoryRepository.findByMember(member);
         List<Category> expenseCategoryList = categoryRepository.findByType(Money_type.expense);
 
+
+        assertEquals(member.getId(), findMember.getId());
         assertEquals(6, expenseCategoryList.size());
 
     }
 
-    @Test()
-    public void duplicate_add_member() {
-
-    }
 
 }

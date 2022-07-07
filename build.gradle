@@ -38,12 +38,17 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
     implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+    implementation "com.querydsl:querydsl-sql:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-sql-spring:${queryDslVersion}"
+
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.querydsl:querydsl-jpa'
+
 }
 
 tasks.named('test') {

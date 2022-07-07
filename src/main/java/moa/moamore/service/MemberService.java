@@ -11,14 +11,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class MemberService {
 
 
     private final MemberRepository memberRepository;
     private final CategoryService categoryService;
-
-
+    @Transactional
     public void join(Member member) {
 
         checkMemberDuplicate(member);
