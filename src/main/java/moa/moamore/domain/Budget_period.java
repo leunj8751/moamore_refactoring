@@ -4,7 +4,7 @@ package moa.moamore.domain;
 import lombok.Getter;
 
 @Getter
-public enum Budget_period implements BaseEnumCode<Integer>{
+public enum Budget_period{
 
     weeek(7), two_week(14), month(30);
 
@@ -15,7 +15,7 @@ public enum Budget_period implements BaseEnumCode<Integer>{
         this.period = period;
     }
 
-    public int intValue() {
+    public Integer getValue() {
         return period;
     }
 
@@ -33,8 +33,6 @@ public enum Budget_period implements BaseEnumCode<Integer>{
     }
 
 
-    @Override
-    public Integer getValue() {
-        return period;
-    }
+
+
 }

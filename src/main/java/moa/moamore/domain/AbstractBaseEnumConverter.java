@@ -19,4 +19,6 @@ public abstract class AbstractBaseEnumConverter<X extends BaseEnumCode<Y>, Y> im
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Unsupported type for %s.", dbData)));
     }
+
+
 }

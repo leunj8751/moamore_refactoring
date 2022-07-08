@@ -69,7 +69,6 @@ public class Budget extends BaseEntity {
         return budget;
     }
 
-
     public void minusAmount(int amount) {
         int restAmount = this.total_budget - amount;
         this.left_budget = restAmount;

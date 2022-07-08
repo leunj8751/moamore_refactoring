@@ -46,5 +46,15 @@ public class MemberServiceTest {
 
     }
 
+    @Test
+    public void test(){
+
+        String test = "new";
+
+
+    }
+
+
+
 
 }
