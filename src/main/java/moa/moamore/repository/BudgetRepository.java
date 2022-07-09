@@ -33,11 +33,6 @@ public class BudgetRepository{
         }
     }
 
-    public void saveBudget_category(Budget_category budget_category) {
-
-        em.merge(budget_category);
-    }
-
     public Budget findOne(Member member) {
 
         List<Budget> budgetList = em.createQuery("select b from Budget b where b.member = :member order by created_date", Budget.class)
@@ -82,19 +77,7 @@ public class BudgetRepository{
                 .getResultList();
     }
 
-    public Budget_category findBudget_category(Budget budget, Category category) {
 
-        List<Budget_category> list = em.createQuery("select b from Budget_category b where b.budget =:budget and b.category =:category", Budget_category.class)
-                .setParameter("budget", budget)
-                .setParameter("category", category)
-                .getResultList();
-
-        if(list.size() >0){
-            return list.get(0);
-        }
-
-        return null;
-    }
 
 
     @Transactional
@@ -107,13 +90,6 @@ public class BudgetRepository{
         em.persist(except_budget);
     }
 
-    public List<Budget_expense> findBudgeTopExpense(Long budgetId) {
-
-        return em.createQuery("select b from Budget_expense b inner join b.budget g on g.id = :budgetId order by amount desc", Budget_expense.class).
-                setParameter("budgetId", budgetId)
-                .setMaxResults(3)
-                .getResultList();
-    }
 
     public List<Budget_expense> findBudgetExpenseList(LocalDate date,String content) {
 

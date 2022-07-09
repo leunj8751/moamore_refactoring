@@ -2,9 +2,6 @@ package moa.moamore.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import moa.moamore.domain.Budget_expense;
-import moa.moamore.domain.Category;
-import moa.moamore.domain.Except_budget;
 import moa.moamore.domain.Money_type;
 import moa.moamore.dto.BudgetDTO;
 import moa.moamore.dto.Budget_expenseDTO;
@@ -19,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -34,19 +30,14 @@ public class BudgetController {
     @GetMapping("/budget/{memberId}/new")
     public String setForm(@PathVariable("memberId") String memberId, Model model) {
 
-        List<Category> categoryList = categoryService.getExpenseCategories(memberId);
-        List<CategoryDTO> categoryDTOList = Arrays.asList(modelMapper.map(categoryList,CategoryDTO[].class));
-        BudgetDTO budgetDTO = new BudgetDTO(memberId,categoryDTOList);
+        List<CategoryDTO> categoryList = categoryService.getExpenseCategories(memberId);
+
+        BudgetDTO budgetDTO = new BudgetDTO(memberId,categoryList);
 
         model.addAttribute("budgetDTO", budgetDTO);
 
-
-
-
         return "budget/setBudget";
     }
-
-
 
 
     @PostMapping("/budget/new")
@@ -65,14 +56,11 @@ public class BudgetController {
     @GetMapping("/budget/{memberId}/recordForm")
     public String recordForm(@PathVariable("memberId") String memberId, Model model) {
 
-        List<Category> expenseList = categoryService.findCategoriesByType(memberId, Money_type.expense);
-        List<CategoryDTO> expenseDTOList = Arrays.asList(modelMapper.map(expenseList,CategoryDTO[].class));
+        List<CategoryDTO> expenseList = categoryService.findCategoriesByType(memberId, Money_type.expense);
+        List<CategoryDTO> incomeList = categoryService.findCategoriesByType(memberId, Money_type.income);
 
-        List<Category> incomeList = categoryService.findCategoriesByType(memberId, Money_type.income);
-        List<CategoryDTO> incomeDTOList = Arrays.asList(modelMapper.map(incomeList,CategoryDTO[].class));
-
-        model.addAttribute("expenseList", expenseDTOList);
-        model.addAttribute("incomeList", incomeDTOList);
+        model.addAttribute("expenseList", expenseList);
+        model.addAttribute("incomeList", incomeList);
 
         return "budget/recordForm";
     }
@@ -99,14 +87,12 @@ public class BudgetController {
     @GetMapping("/budget/reportContent")
     public String reportContentForm(@RequestParam("budgetId") Long budgetId, Model model) {
 
-        List<Budget_expense> expenseList = budgetService.findTopExpense(budgetId);
-        List<Budget_expenseDTO> expenseDTOList = Arrays.asList(modelMapper.map(expenseList,Budget_expenseDTO[].class));
+        List<Budget_expenseDTO> expenseList = budgetService.findTopExpense(budgetId);
+        List<Budget_expenseDTO> categoryList = categoryService.findTopExpense(budgetId);
 
-        List<Budget_expense> categoryList = categoryService.findTopExpense(budgetId);
-        List<Budget_expenseDTO> categoryDTOList = Arrays.asList(modelMapper.map(categoryList,Budget_expenseDTO[].class));
 
-        model.addAttribute("expenseList", expenseDTOList);
-        model.addAttribute("categoryList", categoryDTOList);
+        model.addAttribute("expenseList", expenseList);
+        model.addAttribute("categoryList", categoryList);
 
         return "/budget/reportContent";
     }
@@ -117,17 +103,15 @@ public class BudgetController {
            @RequestParam("record_type") String record_type,
                                Model model) {
 
-        List<Budget_expenseDTO> recordDTOList;
+        List<Budget_expenseDTO> recordList;
 
         if(record_type.equals("except")){
-            List<Except_budget> recordList = budgetService.findExceptBudgetList(date,content);
-            recordDTOList = Arrays.asList(modelMapper.map(recordList,Budget_expenseDTO[].class));
+            recordList = budgetService.findExceptBudgetList(date,content);
         }else{
-            List<Budget_expense> recordList = budgetService.findBudgetExpenseList(date,content);
-            recordDTOList = Arrays.asList(modelMapper.map(recordList,Budget_expenseDTO[].class));
+            recordList = budgetService.findBudgetExpenseList(date,content);
         }
 
-        model.addAttribute("recordList", recordDTOList);
+        model.addAttribute("recordList", recordList);
 
         return "/budget/moneyRecordContent";
     }

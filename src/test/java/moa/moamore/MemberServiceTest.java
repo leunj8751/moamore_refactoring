@@ -22,10 +22,8 @@ public class MemberServiceTest {
 
     @Autowired
     MemberService memberService;
-
     @Autowired
     MemberRepository memberRepository;
-
     @Autowired
     CategoryRepository categoryRepository;
 
@@ -40,21 +38,9 @@ public class MemberServiceTest {
 
         List<Category> expenseCategoryList = categoryRepository.findByType(Money_type.expense);
 
-
         assertEquals(member.getId(), findMember.getId());
         assertEquals(6, expenseCategoryList.size());
 
     }
-
-    @Test
-    public void test(){
-
-        String test = "new";
-
-
-    }
-
-
-
 
 }

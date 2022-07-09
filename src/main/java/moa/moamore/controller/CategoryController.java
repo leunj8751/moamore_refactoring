@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -33,16 +32,12 @@ public class CategoryController {
     public String categoryList(@PathVariable("memberId") String memberId, Model model) {
 
 
-        List<Category> expenseList = categoryService.findCategoriesByType(memberId, Money_type.expense);
-        List<CategoryDTO> expenseDTOList = Arrays.asList(modelMapper.map(expenseList,CategoryDTO[].class));
-
-        List<Category> incomeList = categoryService.findCategoriesByType(memberId, Money_type.income);
-        List<CategoryDTO> incomeDTOList = Arrays.asList(modelMapper.map(incomeList,CategoryDTO[].class));
+        List<CategoryDTO> expenseList = categoryService.findCategoriesByType(memberId, Money_type.expense);
+        List<CategoryDTO> incomeList = categoryService.findCategoriesByType(memberId, Money_type.income);
         CategoryDTO category = new CategoryDTO();
 
-
-        model.addAttribute("expenseList", expenseDTOList);
-        model.addAttribute("incomeList", incomeDTOList);
+        model.addAttribute("expenseList", expenseList);
+        model.addAttribute("incomeList", incomeList);
         model.addAttribute("category", category);
         model.addAttribute("money_types", Money_type.values());
 

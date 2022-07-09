@@ -51,7 +51,6 @@ public class BudgetServiceTest {
     public void setUp(){
 
         memberRepository.save(member);
-        System.out.println("_______________________");
         categoryList = Arrays.asList(
                 new CategoryDTO(1L,"식비",300000),
                 new CategoryDTO(2L,"건강",50000),
@@ -66,15 +65,14 @@ public class BudgetServiceTest {
 
         BudgetDTO budgetDTO = new BudgetDTO(memberId,500000,Budget_period.weeek.getValue(), categoryList);
         budgetService.setNewBudget(budgetDTO);
-        System.out.println("#####################################33");
-//        Budget budget = budgetRepository.findOne(member);
-//        List<Budget_category> budget_categoryList = budgetRepository.findBudget_category(member, budget);
-//
-//
-//        assertEquals(Budget_status.ongoing, budget.getBudget_status());
-//        assertEquals(7, budget.getPeriod().getValue());
-//        assertEquals(4, budget_categoryList.size());
-//        assertEquals(LocalDate.now().plusDays(7), budget.getEnd_day());
+        Budget budget = budgetRepository.findOne(member);
+        List<Budget_category> budget_categoryList = budgetRepository.findBudget_category(member, budget);
+
+
+        assertEquals(Budget_status.ongoing, budget.getBudget_status());
+        assertEquals(7, budget.getPeriod().getValue());
+        assertEquals(4, budget_categoryList.size());
+        assertEquals(LocalDate.now().plusDays(7), budget.getEnd_day());
 
     }
     @Test
@@ -109,25 +107,6 @@ public class BudgetServiceTest {
         assertEquals(Budget_status.end, budget.getBudget_status());
 
     }
-
-
-    @Test
-    public void 예산지출입력() {
-
-        Budget budget = new Budget(member,500000,500000,Budget_period.two_week,Budget_status.ongoing,
-                LocalDate.now().minusDays(10),LocalDate.now().plusDays(4));
-
-        budgetRepository.save(budget);
-
-        ExpenseRecordDTO recordDTO = new ExpenseRecordDTO(memberId,1L,20000,"샤브샤브","홍대 로운",Money_type.expense,LocalDate.now());
-        budgetService.saveRecord(recordDTO);
-
-
-        assertEquals(480000,budget.getTotal_budget());
-
-
-    }
-
 
 
 

@@ -97,8 +97,7 @@ ul{
 
                         <form id="recordForm" method="post" th:object="${budget_expense}"
                               action="/budget/record">
-                            <!--                             데이터 넘어갈 때 수입인지 지출인지 예산내 지출인지도 보내줘야한다. -->
-                            <input type="text" id="type" name="type" value="type"/>
+                            <input type="hidden" id="type" name="type"/>
                             <input type="hidden" id="budget_no" name="budget_no" value="${budgetNum}"/>
                             <input type="hidden" id="category_no" name="category_no" value="0"/>
                             <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.name}">

@@ -4,6 +4,7 @@ package moa.moamore.service;
 import lombok.RequiredArgsConstructor;
 import moa.moamore.domain.*;
 import moa.moamore.dto.BudgetDTO;
+import moa.moamore.dto.Budget_expenseDTO;
 import moa.moamore.dto.CategoryDTO;
 import moa.moamore.dto.ExpenseRecordDTO;
 import moa.moamore.repository.BudgetRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -39,7 +41,7 @@ public class BudgetService {
         handleOldBudget();
         budgetRepository.save(budget);
 
-        saveBudgetCategory(budgetDTO.getCategoryList(),budget,member);
+        saveBudgetCategory(budgetDTO.getCategoryList(),budget);
 
     }
 
@@ -57,9 +59,7 @@ public class BudgetService {
             saveExceptRecord(category,recordDTO);
         }
 
-
     }
-
 
 
     private void saveExceptRecord(Category category, ExpenseRecordDTO recordDTO) {
@@ -75,7 +75,11 @@ public class BudgetService {
     @Transactional
     private void saveBudgetExpense(Budget budget, Category category,ExpenseRecordDTO recordDTO) {
 
-       Budget_category budget_category = budgetRepository.findBudget_category(budget, category);
+        Budget_category budget_category = budget.getBudget_categoryList().stream().filter(
+                 b -> b.getCategory().equals(category))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException());
+
        Budget_expense budget_expense =
                new Budget_expense(budget, category, recordDTO.getAmount(), recordDTO.getContent(), recordDTO.getMemo());
 
@@ -92,11 +96,18 @@ public class BudgetService {
 
         Money_type type = expenseRecordDTO.getType();
         Budget budget = budgetRepository.findOne(expenseRecordDTO.getDate());
-
         Category category = categoryRepository.findOne(expenseRecordDTO.getCategoryId());
-        Budget_category budget_category = budgetRepository.findBudget_category(budget, category);
 
-        if(type != null || budget == null || budget_category == null || budget_category.getAmount() < expenseRecordDTO.getAmount()){
+        if(type != null && budget == null){
+            return false;
+        }
+
+        Budget_category budget_category = budget.getBudget_categoryList().stream().filter(
+                b -> b.getCategory().equals(category))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        if(budget_category == null || budget_category.getAmount() < expenseRecordDTO.getAmount()){
             return false;
         }
 
@@ -113,26 +124,26 @@ public class BudgetService {
         return budgetDTOList;
     }
 
-    public List<Budget_expense> findTopExpense(Long budgetId) {
-        return budgetRepository.findBudgeTopExpense(budgetId);
+    public List<Budget_expenseDTO> findTopExpense(Long budgetId) {
+
+        Budget budget = budgetRepository.findOne(budgetId);
+        List<Budget_expense> expenseList = budget.getBudget_expenseList();
+        List<Budget_expenseDTO> expenseDTOList = Arrays.asList(modelMapper.map(expenseList,Budget_expenseDTO[].class));
+
+        Collections.sort(expenseDTOList);
+
+        return expenseDTOList.subList(0,3);
 
     }
 
-    public List<CategoryDTO> findBudgetExpenseCategories(LocalDate date) {
-        Budget budget = budgetRepository.findOne(date);
-        List<Budget_category> budget_categoryList = budgetRepository.findBudget_category(budget);
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
-        for(Budget_category c : budget_categoryList){
-            categoryDTOList.add(new CategoryDTO(c.getCategory().getId(), c.getCategory().getCategory_name()));
-        }
+    public List<Budget_expenseDTO> findBudgetExpenseList(LocalDate date,String content) {
 
-        return categoryDTOList;
-    }
+        List<Budget_expense> recordList = budgetRepository.findBudgetExpenseList(date,content);
+        List<Budget_expenseDTO> recordDTOList = Arrays.asList(modelMapper.map(recordList, Budget_expenseDTO[].class));
 
-    public List<Budget_expense> findBudgetExpenseList(LocalDate date,String content) {
 
-        return budgetRepository.findBudgetExpenseList(date,content);
+        return recordDTOList;
     }
 
     @Transactional
@@ -144,7 +155,7 @@ public class BudgetService {
 
     }
     @Transactional
-    public void saveBudgetCategory(List<CategoryDTO> categoryDTOList,Budget budget,Member member){
+    public void saveBudgetCategory(List<CategoryDTO> categoryDTOList,Budget budget){
 
         List<Budget_category> budget_categoryList = new ArrayList<>();
 
@@ -158,7 +169,9 @@ public class BudgetService {
         budgetRepository.saveBudget_categories(budget_categoryList);
     }
 
-    public List<Except_budget> findExceptBudgetList(LocalDate date, String content) {
-        return budgetRepository.findExceptBudgetList(date,content);
+    public List<Budget_expenseDTO> findExceptBudgetList(LocalDate date, String content) {
+        List<Except_budget> recordList = budgetRepository.findExceptBudgetList(date,content);
+
+        return Arrays.asList(modelMapper.map(recordList,Budget_expenseDTO[].class));
     }
 }
