@@ -17,6 +17,13 @@ JPA로 리팩토링한 가계부 프로젝트
 &nbsp;
 &nbsp;
 
+<h4>ERD</h4>
+&nbsp;
+
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/68139286/178101315-a0b28262-f772-4c92-bc68-f74df8ae21ae.png">
+
+&nbsp;
+
 <h4>핵심기능</h4>
 &nbsp;
 
